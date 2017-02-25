@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/add_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="添加分组"
+        android:textSize="25sp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/add_et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入新的分组的名字"
+        app:met_baseColor="#0056d3"
+        app:met_clearButton="true"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="请输入新的分组名字"
+        app:met_hideUnderline="true"
+        app:met_primaryColor="#982360"
+        app:met_singleLineEllipsis="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add_bt_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="取消" />
+
+        <Button
+            android:id="@+id/add_bt_sure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="确定" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

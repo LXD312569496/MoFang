@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Cube Information</string>
+
+    <string name="app_language">en</string>
+
+    <string-array name="match_year">
+        <item>All</item>
+        <item>Current</item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+        <item>2011</item>
+        <item>2010</item>
+        <item>2009</item>
+        <item>2008</item>
+        <item>2007</item>
+        <item>2006</item>
+    </string-array>
+
+
+    <string name="main_tv_app_name">Cube Information</string>
+    <string name="main_tab_time">Time</string>
+    <string name="main_tab_match">Competition</string>
+    <string name="main_tab_rank">Rankings</string>
+    <string name="main_tab_competitor">Persons</string>
+    <string name="main_tab_case">Solution</string>
+
+    <string name="match_tv_date">Date</string>
+    <string name="match_tv_name">The Name Of Competition</string>
+    <string name="match_tv_select">Please select year:</string>
+
+    <string name="rank_bt_single">Single</string>
+    <string name="rank_bt_average">Average</string>
+    <string name="rank_tv_name">Name</string>
+    <string name="rank_tv_position">Rank</string>
+    <string name="rank_tv_region">Region</string>
+
+    <string name="competitor_tv_name">Name</string>
+    <string name="competitor_tv_wcaid">WCA ID</string>
+    <string name="competitor_tv_region">Region</string>
+    <string name="competitor_et_hint">Please enter name or WCA ID</string>
+
+
+    <string name="case_et_hint">Please select type:</string>
+    <string name="case_tv_case">Case</string>
+    <string name="case_bt_sure">Search</string>
+    <string name="case_tv_solution">Solution</string>
+
+
+    <string name="webview_title_open">Open with browser</string>
+    <string name="webview_title_copy">Copy link</string>
+    <string name="webview_title_share">Share to friends</string>
+
+
+    <string name="drawer_tv_push">Open competition notification push</string>
+    <string name="drawer_tv_update">Version update</string>
+    <string name="drawer_tv_author">About author</string>
+    <string name="drawer_tv_exit">Exit application</string>
+    <string name="select_tv_title">Please choose the formula you are interested in:</string>
+    <string name="select_tv_second">2*2 Cube</string>
+    <string name="select_tv_third">3*3 Cube</string>
+    <string name="drawer_tv_time">Timer</string>
+
+
+</resources>

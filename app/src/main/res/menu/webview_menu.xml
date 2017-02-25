@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_openByMyWebViewClient"
+        android:showAsAction="ifRoom"
+        android:title="@string/webview_title_open" />
+    <item
+        android:id="@+id/action_copyURL"
+        android:showAsAction="ifRoom"
+        android:title="@string/webview_title_copy" />
+
+    <item
+        android:id="@+id/action_share"
+        android:showAsAction="ifRoom"
+        android:title="@string/webview_title_share" />
+
+</menu>

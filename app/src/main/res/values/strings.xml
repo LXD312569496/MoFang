@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">魔方资讯</string>
+    <string name="app_language">zh_cn</string>
+
+
+    <string-array name="match_year">
+        <item>所有</item>
+        <item>近期</item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+        <item>2011</item>
+        <item>2010</item>
+        <item>2009</item>
+        <item>2008</item>
+        <item>2007</item>
+        <item>2006</item>
+    </string-array>
+
+
+    <!--main模块-->
+    <string name="main_tv_app_name">魔方资讯</string>
+    <string name="main_tab_time">计时</string>
+    <string name="main_tab_match">赛事</string>
+    <string name="main_tab_rank">排名</string>
+    <string name="main_tab_competitor">选手</string>
+    <string name="main_tab_case">公式</string>
+
+    <!--赛事模块-->
+    <string name="match_tv_date">日期</string>
+    <string name="match_tv_name">比赛名字</string>
+    <string name="match_tv_select">请选择年份:</string>
+
+    <!--排名模块-->
+    <string name="rank_bt_single">单次</string>
+    <string name="rank_bt_average">平均</string>
+    <string name="rank_tv_name">姓名</string>
+    <string name="rank_tv_position">排名</string>
+    <string name="rank_tv_region">地区</string>
+    <string name="rank_tv_score">成绩</string>
+
+
+    <!--选手模块-->
+    <string name="competitor_tv_name">姓名</string>
+    <string name="competitor_tv_wcaid">WCA ID</string>
+    <string name="competitor_tv_region">地区</string>
+    <string name="competitor_et_hint">请输入姓名或WCA ID</string>
+
+    <!--公式模块-->
+    <string name="case_et_hint">请选择种类:</string>
+    <string name="case_tv_case">情况</string>
+    <string name="case_bt_sure">确定</string>
+    <string name="case_tv_solution">公式</string>
+    <string name="select_tv_title">请选择你感兴趣的公式:</string>
+    <string name="select_tv_second">二阶</string>
+    <string name="select_tv_third">三阶</string>
+
+    <!--分享模块-->
+    <string name="webview_title_open">用浏览器打开</string>
+    <string name="webview_title_copy">复制链接</string>
+    <string name="webview_title_share">分享给好友</string>
+
+    <!--侧滑菜单模块-->
+    <string name="drawer_tv_push">开启比赛通知推送</string>
+    <string name="drawer_tv_update">版本更新</string>
+    <string name="drawer_tv_author">关于作者</string>
+    <string name="drawer_tv_exit">退出应用</string>
+    <string name="drawer_tv_time">计时器</string>
+
+
+</resources>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/score_tv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:text="添加分组"
+            android:textColor="#11acef" />
+
+        <Spinner
+            android:id="@+id/score_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:backgroundTint="#000000"
+            android:dropDownVerticalOffset="40dp"
+            android:gravity="center"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:id="@+id/score_tv_select"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:text="选项"
+            android:textColor="#11acef" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#11acef"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="时间" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="avg of 5" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="avg of 12" />
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/score_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#11acef" />
+
+
+    <TextView
+        android:id="@+id/score_bt_avg"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginBottom="5dp"
+        android:background="#1196ef"
+        android:gravity="center"
+        android:text="本组平均(0/0):0.000" />
+
+
+</LinearLayout>

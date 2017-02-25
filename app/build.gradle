@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'org.greenrobot.greendao'
+
+
+
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        applicationId "com.example.administrator.mofang"
+        minSdkVersion 18
+        targetSdkVersion 24
+        versionCode 9
+        versionName "1.3"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    greendao {
+        schemaVersion 1
+        targetGenDir 'src/main/java'
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    testCompile 'junit:junit:4.12'
+    compile 'org.jsoup:jsoup:1.10.2'
+    compile 'cn.bmob.android:bmob-sdk:3.5.0'
+    //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
+    compile 'cn.bmob.android:http-legacy:1.0'
+    compile('com.squareup.retrofit2:retrofit:2.1.0') { exclude group: 'com.squareup.okhttp3' }
+    compile('com.squareup.retrofit2:converter-gson:2.1.0') {
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.squareup.okhttp3'
+    }
+    compile('com.squareup.retrofit2:converter-scalars:2.0.0') {
+        exclude group: 'com.squareup.okhttp3'
+    }
+    compile('com.squareup.retrofit2:adapter-rxjava:2.1.0') {
+        exclude group: 'io.reactivex'
+        exclude group: 'com.squareup.okhttp3'
+    }
+    compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.jakewharton:butterknife:8.0.1'
+//    compile 'com.jakewharton:butterknife:8.5.1'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'de.greenrobot:eventbus:3.0.0-beta1'
+    compile files('libs/SocialSDK_QQ_Simplify.jar')
+    compile files('libs/SocialSDK_WeChat_Simplify.jar')
+    compile files('libs/umeng_social_api.jar')
+    compile files('libs/umeng_social_net.jar')
+    compile files('libs/umeng_social_tool.jar')
+    compile files('libs/umeng_social_shareboard.jar')
+    compile files('libs/umeng_shareboard_widget.jar')
+    compile project(':PushSDK')
+    compile 'com.android.support:design:25.1.0'
+    compile files('libs/libammsdk.jar')
+    compile files('libs/SocialSDK_WeiXin_Full.jar')
+    compile files('libs/BmobStat_v1.1_170114.jar')
+
+    compile 'org.greenrobot:greendao:3.0.1'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+
+
+}
