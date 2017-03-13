@@ -58,7 +58,7 @@ public interface MoFangInterface {
     /**
      * 抓取公式
      */
-    @GET("http://algdb.net/Set/{OLL}")
-    Observable<String> getCase(@Path("OLL") String oll);
+    @GET("http://www.cubezone.be/zbf2lprintpage.html")
+    Observable<String> getCase();
 
 }

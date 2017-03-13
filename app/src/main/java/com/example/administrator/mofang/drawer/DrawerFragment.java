@@ -6,20 +6,26 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.administrator.mofang.R;
+import com.example.administrator.mofang.common.DialogUtil;
 import com.example.administrator.mofang.time.TimeActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.BmobUpdateListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 import cn.bmob.v3.update.UpdateResponse;
 import cn.bmob.v3.update.UpdateStatus;
@@ -58,7 +64,7 @@ public class DrawerFragment extends Fragment implements CompoundButton.OnChecked
 
     @OnClick({
 //            R.id.drawer_ll_save,
-            R.id.drawer_ll_update, R.id.drawer_ll_about, R.id.drawer_ll_exit, R.id.drawer_ll_time})
+            R.id.drawer_ll_update, R.id.drawer_ll_about, R.id.drawer_ll_exit, R.id.drawer_ll_time,R.id.drawer_ll_feedback})
     public void onClick(View view) {
         switch (view.getId()) {
 //            case R.id.drawer_ll_use:
@@ -98,7 +104,45 @@ public class DrawerFragment extends Fragment implements CompoundButton.OnChecked
             case R.id.drawer_ll_time:
                 TimeActivity.startActivity(getActivity());
                 break;
+            case R.id.drawer_ll_feedback:
+                showFeedBackDialog();
+                break;
         }
+    }
+
+    private void showFeedBackDialog() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        View view=LayoutInflater.from(getActivity()).inflate(R.layout.dialog_feedback,null);
+        builder.setView(view);
+        AlertDialog dialog=builder.create();
+        dialog.show();
+
+        final EditText etFeedBack= (EditText) view.findViewById(R.id.dialog_et_feedback);
+        final Button btSend= (Button) view.findViewById(R.id.dialog_bt_send);
+
+        btSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content=etFeedBack.getText().toString();
+                if (TextUtils.isEmpty(content)){
+                    Toast.makeText(getActivity(),"发送失败,输入不能为空",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                FeedBack feedBack=new FeedBack(content);
+                feedBack.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e==null){
+                            Toast.makeText(getActivity(),"反馈发送成功，谢谢你的建议",Toast.LENGTH_LONG).show();
+                            etFeedBack.setText("");
+                        }else {
+                            Toast.makeText(getActivity(),"反馈发送失败，请重新发送",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
     }
 
 

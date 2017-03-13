@@ -3,6 +3,7 @@ package com.example.administrator.mofang;
 import android.app.Application;
 import android.util.Log;
 
+
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -29,6 +30,7 @@ public class MyApplication extends Application {
         initBmob();
         initUMeng();
 //        initRealm();
+
 
     }
 

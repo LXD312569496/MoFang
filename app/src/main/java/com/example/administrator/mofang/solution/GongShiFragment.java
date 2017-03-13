@@ -70,6 +70,14 @@ public class GongShiFragment extends Fragment {
         mTypeList.add("OH OLL");
         mTypeList.add("OH PLL");
 
+        mTypeList.add("Parity OLL");
+        mTypeList.add("Last Two Centers");
+        mTypeList.add("Last Two Edges");
+        mTypeList.add("CLL/EG");
+        mTypeList.add("Last 5 Centers");
+        mTypeList.add("Corners Last Slot");
+        mTypeList.add("ZBF2L");
+
         SharedPreferences share = getActivity().getSharedPreferences("case", Context.MODE_PRIVATE);
         mEditor = share.edit();
         for (int i = 0; i < mTypeList.size(); i++) {

@@ -162,7 +162,7 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
         mCurrentGroupName = mSpinnerList.get(0);
     }
 
-
+    //保存成绩到数据库中
     @Subscribe
     public void onEventMainThread(SaveTimeEvent event) {
         long score = event.getScore();
@@ -171,6 +171,7 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
         bean.setName(mCurrentGroupName);
         bean.setTime(time);
         bean.setScore(score);
+        bean.setScramble(event.getScramble());
         DaoManager.getScoreDao().insert(bean);
         mScoreList.add(bean);
         mScoreAdapter.notifyDataSetChanged();

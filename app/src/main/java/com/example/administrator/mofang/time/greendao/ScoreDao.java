@@ -26,6 +26,7 @@ public class ScoreDao extends AbstractDao<Score, Long> {
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Score = new Property(2, long.class, "score", false, "SCORE");
         public final static Property Time = new Property(3, String.class, "time", false, "TIME");
+        public final static Property Scramble = new Property(4, String.class, "scramble", false, "SCRAMBLE");
     };
 
 
@@ -44,7 +45,8 @@ public class ScoreDao extends AbstractDao<Score, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NAME\" TEXT," + // 1: name
                 "\"SCORE\" INTEGER NOT NULL ," + // 2: score
-                "\"TIME\" TEXT);"); // 3: time
+                "\"TIME\" TEXT," + // 3: time
+                "\"SCRAMBLE\" TEXT);"); // 4: scramble
     }
 
     /** Drops the underlying database table. */
@@ -72,6 +74,11 @@ public class ScoreDao extends AbstractDao<Score, Long> {
         if (time != null) {
             stmt.bindString(4, time);
         }
+ 
+        String scramble = entity.getScramble();
+        if (scramble != null) {
+            stmt.bindString(5, scramble);
+        }
     }
 
     @Override
@@ -93,6 +100,11 @@ public class ScoreDao extends AbstractDao<Score, Long> {
         if (time != null) {
             stmt.bindString(4, time);
         }
+ 
+        String scramble = entity.getScramble();
+        if (scramble != null) {
+            stmt.bindString(5, scramble);
+        }
     }
 
     @Override
@@ -106,7 +118,8 @@ public class ScoreDao extends AbstractDao<Score, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.getLong(offset + 2), // score
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // time
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // time
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // scramble
         );
         return entity;
     }
@@ -117,6 +130,7 @@ public class ScoreDao extends AbstractDao<Score, Long> {
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setScore(cursor.getLong(offset + 2));
         entity.setTime(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setScramble(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     @Override

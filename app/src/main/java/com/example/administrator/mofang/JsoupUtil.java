@@ -1,7 +1,9 @@
 package com.example.administrator.mofang;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.example.administrator.mofang.common.DateUtil;
 import com.example.administrator.mofang.competitor.Competitor;
 import com.example.administrator.mofang.competitor.SpinnerBean;
 import com.example.administrator.mofang.match.Match;
@@ -95,7 +97,7 @@ public class JsoupUtil {
                         .header("Cache-Control", "public, max-age=" + maxAge)
                         .build();
             } else {
-                int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale
+                int maxStale = 15 * 60 * 24 * 8; // tolerate 2 -day stale
                 response.newBuilder()
                         .removeHeader("Pragma")
                         .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
@@ -116,25 +118,31 @@ public class JsoupUtil {
         Document document = Jsoup.parse(result);
 
         //抓取未过期的比赛
-        Elements links = document.select("tr.info");
+        Elements links = document.select("div.table-responsive").select("tbody").select("tr");
         for (Element e : links) {
-//            Log.d("test", e.toString());
             String url = e.select("a").attr("href");
             String date = e.select("td").first().text();
             String name = e.select("a").text();
-            Boolean isOut = false;
+            Boolean isOut ;
+//            Log.d("test,",DateUtil.getCurrentDate()+"..."+date+"..."+DateUtil.getCurrentDate().compareTo(date));
+            if (DateUtil.getCurrentDate().compareTo(date)>=0){
+            //说明未过期
+            isOut=true;
+            }else {
+                isOut=false;
+            }
             list.add(new Match(url, date, name, isOut));
         }
         //抓取今天正在进行的比赛
-        Elements links1 = document.select("tr.success");
-        for (Element e : links1) {
+//        Elements links1 = document.select("tr.success");
+//        for (Element e : links1) {
 //            Log.d("test", e.toString());
-            String url = e.select("a").attr("href");
-            String date = e.select("td").first().text();
-            String name = e.select("a").text();
-            Boolean isOut = false;
-            list.add(new Match(url, date, name, isOut));
-        }
+//            String url = e.select("a").attr("href");
+//            String date = e.select("td").first().text();
+//            String name = e.select("a").text();
+//            Boolean isOut = false;
+//            list.add(new Match(url, date, name, isOut));
+//        }
 
         //抓取过期的比赛
         Elements links2 = document.select("tr.active");
@@ -251,22 +259,27 @@ public class JsoupUtil {
      */
     public static List<Case> getCase(String str) {
         List<Case> list = new ArrayList<>();
+        List<String> imgList=new ArrayList<>();
+        List<String> solutionList=new ArrayList<>();
 
         Document document = Jsoup.parse(str);
-
-        Elements links = document.select("table.table.table-bordered.table-hover.table-condensed")
-                .select("tbody").select("tr");
-
-        for (Element e : links) {
-//            Log.d("test", e.toString());
-            String url = e.select("a").attr("href");
-            String name = e.select("a").text();
-            String bitmap = e.select("img").attr("src");
-
-            String temp = e.select("td").last().toString().replace("<br>", "\n");
-            String result = temp.substring(4, temp.length() - 5);
-//            Log.d("test",result);
-            list.add(new Case(url, name, bitmap, result));
+        Elements elements=document.select("tr");
+        for (int i = 0; i < elements.size(); i++) {
+            if (i%2==0){
+                Elements elems=elements.get(i).select("td");
+                for (int j = 0; j <elems.size() ; j++) {
+                    imgList.add(elems.get(j).select("img").attr("src"));
+                }
+            }else if (i%2==1){
+                Elements elems=elements.get(i).select("td");
+                for (int j = 0; j < elems.size(); j++) {
+                    solutionList.add(elems.get(j).text());
+                }
+            }
+        }
+//            list.add(new Case(url, name, bitmap, result));
+        for (int i = 0; i <imgList.size() ; i++) {
+            list.add(new Case("","ZBF2L-"+i,imgList.get(i),solutionList.get(i)));
         }
 
         return list;

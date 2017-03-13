@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.example.administrator.mofang.competitor.CompetitorFragment;
@@ -20,6 +22,7 @@ import com.example.administrator.mofang.match.MatchFragment;
 import com.example.administrator.mofang.me.Case;
 import com.example.administrator.mofang.rank.RankFragment;
 import com.example.administrator.mofang.solution.GongShiFragment;
+import com.example.administrator.mofang.time.Scrambler;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.umeng.analytics.MobclickAgent;
@@ -40,6 +43,8 @@ import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
+import static com.example.administrator.mofang.R.id.webView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,20 +85,20 @@ Log.d("test",(mTabLayout==null)+"");
 
     }
 
-    private void temp(String url){
-        JsoupUtil.getInterFace().getCase(url)
+    private void temp(){
+        JsoupUtil.getInterFace().getCase()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        List<Case> list=JsoupUtil.getCase(s);
+                        List<Case> list = JsoupUtil.getCase(s);
                         for (int i = 0; i <list.size() ; i++) {
                             com.example.administrator.mofang.solution.Case bean=new com.example.administrator.mofang.solution.Case();
-                            bean.setName("OH OLL");
-                            bean.setType("单拧");
+                            bean.setName("ZBF2L");
+                            bean.setType("三阶");
                             bean.setPicture(new BmobFile(list.get(i).getName()+".jpg","",list.get(i).getBitmap()));
                             bean.setSolution(list.get(i).getResult());
-                            bean.setCaseName(list.get(i).getName().replace("OLL","OH OLL"));
+                            bean.setCaseName(list.get(i).getName());
                             bean.save(new SaveListener<String>() {
                                 @Override
                                 public void done(String s, BmobException e) {
@@ -105,10 +110,11 @@ Log.d("test",(mTabLayout==null)+"");
                                 }
                             });
                         }
-
                     }
                 });
+
     }
+
 
     private void initData() {
         mFragmentList = new ArrayList<>();

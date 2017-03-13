@@ -42,4 +42,11 @@ public class DateUtil {
         return format.format(date);
     }
 
+    //获取时间年月日
+    public static String getCurrentDate(){
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        Date date=new Date();
+        return format.format(date);
+    }
+
 }

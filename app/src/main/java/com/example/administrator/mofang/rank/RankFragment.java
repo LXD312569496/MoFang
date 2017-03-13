@@ -132,6 +132,7 @@ public class RankFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 region = mRegionList.get(i).getValue();
+                getData(true);
             }
 
             @Override
@@ -173,6 +174,7 @@ public class RankFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 event = mTypeList.get(i).getValue();
+                getData(true);
             }
 
             @Override
@@ -205,8 +207,12 @@ public class RankFragment extends Fragment {
         switch (view.getId()) {
             case R.id.rank_bt_single:
                 type = "single";
+                mBtSingle.setBackgroundResource(R.drawable.button_selected);
+                mBtAverage.setBackgroundResource(R.drawable.button_unselected);
                 break;
             case R.id.rank_bt_average:
+                mBtAverage.setBackgroundResource(R.drawable.button_selected);
+                mBtSingle.setBackgroundResource(R.drawable.button_unselected);
                 type = "average";
                 break;
         }

@@ -16,8 +16,9 @@ public class DaoManager {
     private static GroupDao groupDao;
 
     public static void init(Context context){
-        DaoMaster.DevOpenHelper devOpenHelper=new DaoMaster.DevOpenHelper(context,"time.db",null);
-        daoMaster=new DaoMaster(devOpenHelper.getWritableDb());
+//        DaoMaster.DevOpenHelper devOpenHelper=new DaoMaster.DevOpenHelper(context,"time.db",null);
+       DBHelper helper=new DBHelper(context,"time.db");
+        daoMaster=new DaoMaster(helper.getWritableDb());
         daoSession=daoMaster.newSession();
         scoreDao=daoSession.getScoreDao();
         groupDao=daoSession.getGroupDao();

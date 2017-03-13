@@ -2,6 +2,7 @@ package com.example.administrator.mofang.match;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         holder.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WebViewActivity.startActivity(mContext, match.getUrl(),match.getName());
+                WebViewActivity.startActivity(mContext, match.getUrl(), match.getName());
             }
         });
 

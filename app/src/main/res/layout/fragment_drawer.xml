@@ -145,6 +145,30 @@
 
     </LinearLayout>
 
+    <include layout="@layout/part_line_horizontal" />
+
+    <LinearLayout
+        android:id="@+id/drawer_ll_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/drawer_feedback" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:text="用户反馈" />
+
+    </LinearLayout>
 
     <include layout="@layout/part_line_horizontal" />
 

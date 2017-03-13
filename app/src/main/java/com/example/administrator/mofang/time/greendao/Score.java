@@ -18,6 +18,9 @@ public class Score {
     long score;//计时的成绩
     String time;//计时的时间
 
+    String scramble;
+
+
     public String getTime() {
         return this.time;
     }
@@ -42,12 +45,20 @@ public class Score {
     public void setId(Long id) {
         this.id = id;
     }
-    @Generated(hash = 1499519190)
-    public Score(Long id, String name, long score, String time) {
+    public String getScramble() {
+        return this.scramble;
+    }
+    public void setScramble(String scramble) {
+        this.scramble = scramble;
+    }
+
+    @Generated(hash = 214032889)
+    public Score(Long id, String name, long score, String time, String scramble) {
         this.id = id;
         this.name = name;
         this.score = score;
         this.time = time;
+        this.scramble = scramble;
     }
     @Generated(hash = 226049941)
     public Score() {

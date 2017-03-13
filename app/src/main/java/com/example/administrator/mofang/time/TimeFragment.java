@@ -19,7 +19,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.administrator.mofang.R;
@@ -31,7 +34,9 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import fr.ganfra.materialspinner.MaterialSpinner;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -50,6 +55,10 @@ public class TimeFragment extends Fragment {
     TextView mTvTime;
     @BindView(R.id.time_layout)
     RelativeLayout mLayout;
+    @BindView(R.id.time_spinner)
+    Spinner mTypeSpinner;
+    @BindView(R.id.time_tv_scramble)
+    TextView mTvScramble;
 
     private int mBackGround;
 
@@ -61,6 +70,9 @@ public class TimeFragment extends Fragment {
     private int mDelayTime = 1;//间隔时间，单位毫秒,observable发送的速率
     private long mCurrentTime = 0;//当前时间
 
+    private Scrambler mScrambler = new Scrambler();
+    private String mCurrentType = "3x3x3";//当前的魔方类型
+    private String mCurrentScramble="";//当前的打乱
 
 
     @Nullable
@@ -68,8 +80,6 @@ public class TimeFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_time, container, false);
         ButterKnife.bind(this, rootView);
-
-
         initView();
 
         return rootView;
@@ -118,23 +128,35 @@ public class TimeFragment extends Fragment {
             }
         });
 
+        final String[] ITEMS = {"3x3x3", "2x2x2", "4x4x4", "5x5x5", "6x6x6", "7x7x7"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, ITEMS);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mTypeSpinner.setAdapter(adapter);
+        mTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mCurrentType=ITEMS[i];
+                getScramble();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 
     public static TimeFragment newInstance() {
         TimeFragment fragment = new TimeFragment();
         return fragment;
     }
-
-
-
-
-
 
 
     private void showDialog() {
@@ -150,11 +172,11 @@ public class TimeFragment extends Fragment {
                         saveScore();
                         break;
                     case 1:
-                        mCurrentTime=mCurrentTime+2000;
+                        mCurrentTime = mCurrentTime + 2000;
                         saveScore();
                         break;
                     case 2:
-                        mCurrentTime=0;
+                        mCurrentTime = 0;
                         saveScore();
                         break;
                     case 3:
@@ -171,8 +193,8 @@ public class TimeFragment extends Fragment {
 
     //保存成绩到数据库
     private void saveScore() {
-        Log.d("test",DateUtil.getCurrentTime());
-        EventBus.getDefault().post(new SaveTimeEvent(mCurrentTime,DateUtil.getCurrentTime()));
+        Log.d("test", DateUtil.getCurrentTime());
+        EventBus.getDefault().post(new SaveTimeEvent(mCurrentTime, DateUtil.getCurrentTime(),mCurrentScramble));
     }
 
 
@@ -221,5 +243,15 @@ public class TimeFragment extends Fragment {
             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
             return cursor.getString(idx);
         }
+    }
+
+    @OnClick(R.id.time_tv_scramble)
+    public void onClick() {
+        getScramble();
+    }
+
+    private void getScramble(){
+        mCurrentScramble=mScrambler.getScramble(mCurrentType);
+        mTvScramble.setText(mCurrentScramble);
     }
 }

@@ -7,10 +7,20 @@ package com.example.administrator.mofang.time;
 public class SaveTimeEvent {
     long score;//成绩
     String time;//时间
+    String scramble;//打乱
 
-    public SaveTimeEvent(long score, String time) {
+    public SaveTimeEvent(long score, String time,String scramble) {
         this.score = score;
         this.time = time;
+        this.scramble=scramble;
+    }
+
+    public String getScramble() {
+        return scramble;
+    }
+
+    public void setScramble(String scramble) {
+        this.scramble = scramble;
     }
 
     public void setScore(long score) {

@@ -48,6 +48,20 @@ public class SelectActivity extends Activity implements CompoundButton.OnChecked
     Switch mSwitchWvls;
     @BindView(R.id.select_switch_vls)
     Switch mSwitchVls;
+    @BindView(R.id.select_switch_parity_oll)
+    Switch mSwitchParityOll;
+    @BindView(R.id.select_switch_last_last_two_centers)
+    Switch mSwitchLastLastTwoCenters;
+    @BindView(R.id.select_switch_last_last_two_edges)
+    Switch mSwitchLastLastTwoEdges;
+    @BindView(R.id.select_switch_cll_eg)
+    Switch mSwitchCllEg;
+    @BindView(R.id.select_switch_last_5_centers)
+    Switch mSwitchLast5Centers;
+    @BindView(R.id.select_switch_corners_last_slot)
+    Switch mSwitchCornersLastSlot;
+    @BindView(R.id.select_switch_zbf2l)
+    Switch mSwitchZbf2l;
 
     private ArrayList<String> mSelectedList;
 
@@ -92,12 +106,26 @@ public class SelectActivity extends Activity implements CompoundButton.OnChecked
                 mSwitchSinglePll.setChecked(true);
             } else if (name.equals("OH OLL")) {
                 mSwitchSingleOll.setChecked(true);
-            }else if (name.equals("VLS")){
+            } else if (name.equals("VLS")) {
                 mSwitchVls.setChecked(true);
-            }else if (name.equals("WVLS")){
+            } else if (name.equals("WVLS")) {
                 mSwitchWvls.setChecked(true);
-            }else if (name.equals("CMLL")){
+            } else if (name.equals("CMLL")) {
                 mSwitchCmll.setChecked(true);
+            } else if (name.equals("Parity OLL")) {
+                mSwitchParityOll.setChecked(true);
+            } else if (name.equals("Last Two Centers")) {
+                mSwitchLastLastTwoCenters.setChecked(true);
+            } else if (name.equals("Last Two Edges")) {
+                mSwitchLastLastTwoEdges.setChecked(true);
+            } else if (name.equals("CLL/EG")) {
+                mSwitchCllEg.setChecked(true);
+            } else if (name.equals("Last 5 Centers")) {
+                mSwitchLast5Centers.setChecked(true);
+            } else if (name.equals("Corners Last Slot")) {
+                mSwitchCornersLastSlot.setChecked(true);
+            }else if (name.equals("ZBF2L")){
+                mSwitchZbf2l.setChecked(true);
             }
 
 
@@ -118,6 +146,14 @@ public class SelectActivity extends Activity implements CompoundButton.OnChecked
         mSwitchCmll.setOnCheckedChangeListener(this);
         mSwitchVls.setOnCheckedChangeListener(this);
         mSwitchWvls.setOnCheckedChangeListener(this);
+
+        mSwitchParityOll.setOnCheckedChangeListener(this);
+        mSwitchLastLastTwoCenters.setOnCheckedChangeListener(this);
+        mSwitchLastLastTwoEdges.setOnCheckedChangeListener(this);
+        mSwitchCllEg.setOnCheckedChangeListener(this);
+        mSwitchLast5Centers.setOnCheckedChangeListener(this);
+        mSwitchCornersLastSlot.setOnCheckedChangeListener(this);
+        mSwitchZbf2l.setOnCheckedChangeListener(this);
     }
 
 

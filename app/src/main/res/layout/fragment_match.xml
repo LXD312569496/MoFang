@@ -18,6 +18,7 @@
             android:text="@string/match_tv_select" />
 
         <Spinner
+            android:backgroundTint="#000000"
             android:id="@+id/match_spinner"
             android:layout_width="0dp"
             android:layout_height="match_parent"

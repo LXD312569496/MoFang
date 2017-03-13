@@ -39,33 +39,33 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
     public void onBindViewHolder(ScoreViewHolder holder, final int position) {
         final Score bean = mScoreList.get(position);
 
-        long score=bean.getScore();
-        if (score==0){
+        long score = bean.getScore();
+        if (score == 0) {
             holder.tvTime.setText("DNF");
-        }else {
+        } else {
             holder.tvTime.setText(DateUtil.formatTime(score));
         }
 
-        if (position<4){
+        if (position < 4) {
             holder.tvAvg5.setText("N/A");
-        }else {
-            holder.tvAvg5.setText(DateUtil.formatTime(getAvg(position,4)));
+        } else {
+            holder.tvAvg5.setText(DateUtil.formatTime(getAvg(position, 4)));
         }
 
-        if (position<11){
+        if (position < 11) {
             holder.tvAvg12.setText("N/A");
-        }else {
-            holder.tvAvg12.setText(DateUtil.formatTime(getAvg(position,11)));
+        } else {
+            holder.tvAvg12.setText(DateUtil.formatTime(getAvg(position, 11)));
         }
-
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = DialogUtil.getBuilder(mContext);
-                builder.setTitle("时间"+bean.getTime());
-                builder.setMessage("成绩：" + DateUtil.formatTime(bean.getScore()));
+                builder.setTitle("时间" + bean.getTime());
+                builder.setMessage("成绩：" + DateUtil.formatTime(bean.getScore()) + "\n"
+                        + "打乱: " + bean.getScramble());
 
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
@@ -76,7 +76,7 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
                 builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                            mDeleteListener.onDelete(position,bean);
+                        mDeleteListener.onDelete(position, bean);
                     }
                 });
                 builder.create().show();
@@ -84,17 +84,16 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
         });
 
 
-
     }
 
     private OnDeleteListener mDeleteListener;
 
-    public void setOnDeleteListener(OnDeleteListener DeleteListener){
-        this.mDeleteListener=DeleteListener;
+    public void setOnDeleteListener(OnDeleteListener DeleteListener) {
+        this.mDeleteListener = DeleteListener;
     }
 
-    public interface OnDeleteListener{
-        void onDelete(int positon,Score bean);
+    public interface OnDeleteListener {
+        void onDelete(int positon, Score bean);
     }
 
     @Override
@@ -116,18 +115,17 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
     }
 
 
-
-    private long getAvg(int position,int count){
-        long sum=0;
-        int num=0;//不是dnf的个数
+    private long getAvg(int position, int count) {
+        long sum = 0;
+        int num = 0;//不是dnf的个数
         for (int i = 0; i < count; i++) {
-            Score bean=mScoreList.get(position-count);
-            if (bean.getScore()!=0){
-                sum=sum+bean.getScore();
+            Score bean = mScoreList.get(position - count);
+            if (bean.getScore() != 0) {
+                sum = sum + bean.getScore();
                 num++;
             }
         }
-        return (long) (sum*1.0/num);
+        return (long) (sum * 1.0 / num);
     }
 
 
