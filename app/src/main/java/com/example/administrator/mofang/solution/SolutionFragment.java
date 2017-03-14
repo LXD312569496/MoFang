@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class SolutionFragment extends Fragment {
         query.addWhereEqualTo("name",name);
         query.order("caseName");
         query.setLimit(1000);
+
         //判断是否有缓存，该方法必须放在查询条件（如果有的话）都设置完之后再来调用才有效，就像这里一样。
 //            boolean isCache = query.hasCachedResult(Case.class);
 //            if(isCache){
@@ -80,11 +82,14 @@ public class SolutionFragment extends Fragment {
             @Override
             public void done(List<Case> list, BmobException e) {
                 if (e!=null){
+                    Log.d("test",e.getMessage());
                     return;
                 }
                 if (list==null||list.size()==0){
+                    Log.d("test","缓存列表的数据为空");
                     return;
                 }
+                Log.d("test","缓存列表的数据"+list.size());
                 CaseAdapter adapter=new CaseAdapter(list);
                 mRecyclerView.setAdapter(adapter);
                 mRecyclerView.setLinearLayout();

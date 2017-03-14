@@ -17,7 +17,6 @@ public class DateUtil {
         long second = time / 1000 % 60;
         long min = time / 1000 / 60 % 60;
         long hour = time / 1000 / 60 / 60 % 24;
-
         if (hour != 0) {
             result.append(String.valueOf(hour) + ":");
         }
@@ -33,6 +32,7 @@ public class DateUtil {
                 + (millSecond < 100 ? "0" + millSecond : millSecond));
         return result.toString();
     }
+
 
 
     //获取时间年月日时分秒

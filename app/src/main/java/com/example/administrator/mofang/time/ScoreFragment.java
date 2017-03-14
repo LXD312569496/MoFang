@@ -1,6 +1,7 @@
 package com.example.administrator.mofang.time;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,15 @@ import com.example.administrator.mofang.time.greendao.Group;
 import com.example.administrator.mofang.time.greendao.GroupDao;
 import com.example.administrator.mofang.time.greendao.Score;
 import com.example.administrator.mofang.time.greendao.ScoreDao;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.ChartData;
+import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
@@ -38,6 +48,7 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 
+import static android.R.attr.resource;
 import static com.example.administrator.mofang.time.greendao.DaoManager.getDao;
 
 /**
@@ -67,14 +78,14 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_score, container, false);
         ButterKnife.bind(this, rootView);
-//        EventBus.getDefault().register(this);
 
         initView();
 
         return rootView;
     }
+
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
     }
@@ -194,7 +205,7 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
 
     private void select() {
         final AlertDialog.Builder builder = DialogUtil.getBuilder(getActivity());
-        String[] items = new String[]{"修改分组名字", "清空成绩", "删除该分组"};
+        String[] items = new String[]{"修改分组名字", "清空成绩", "删除该分组", "统计图表"};
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -208,10 +219,57 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
                     case 2:
                         deleteGroup();
                         break;
+                    case 3:
+                        showChartDialog(mScoreList);
                 }
             }
         });
         builder.create().show();
+    }
+
+    //显示统计图表
+    private void showChartDialog(List<Score> scoreList) {
+        if (scoreList.size()==0){
+            Toast.makeText(getActivity(),"列表成绩为空，无法产生图表",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        AlertDialog.Builder builder = DialogUtil.getBuilder(getActivity());
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_time_chart, null);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        Button btCancel= (Button) view.findViewById(R.id.time_bt_cancel);
+        btCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        LineChart mLineChart= (LineChart) view.findViewById(R.id.time_line_chart);
+        XAxis xAxis = mLineChart.getXAxis();
+        mLineChart.setScaleEnabled(true); //设置图表是否可缩放
+        //设置X轴的文字在底部
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        //模拟一个x轴的数据  12/1 12/2 ... 12/7
+        ArrayList<String> xValues = new ArrayList<>();
+        for (int i = 0; i < scoreList.size(); i++) {
+            xValues.add("");
+        }
+        //模拟一组y轴数据(存放y轴数据的是一个Entry的ArrayList) 他是构建LineDataSet的参数之一
+        ArrayList<Entry> yValue = new ArrayList<>();
+        for (int i = 0; i < scoreList.size(); i++) {
+            yValue.add(new Entry(i, (float) (mScoreList.get(i).getScore()*1.0/1000)));
+        }
+        //构建一个LineDataSet 代表一组Y轴数据 （比如不同的彩票： 七星彩  双色球）
+        LineDataSet dataSet = new LineDataSet(yValue, "成绩(单位：秒)");
+
+        //构建一个LineData  将dataSets放入
+        LineData lineData = new LineData(dataSet);
+        //将数据插入
+        mLineChart.setData(lineData);
     }
 
     private void clearGroup() {
@@ -237,7 +295,7 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                List<Score> list=DaoManager.getScoreDao().queryBuilder().where(ScoreDao.Properties.Name.eq(mCurrentGroupName)).list();
+                List<Score> list = DaoManager.getScoreDao().queryBuilder().where(ScoreDao.Properties.Name.eq(mCurrentGroupName)).list();
                 DaoManager.getScoreDao().deleteInTx(list);
                 DaoManager.getDao(Group.class).delete(new Group(mCurrentGroupName));
 
@@ -290,9 +348,9 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
                     DaoManager.getDao(Group.class).insert(new Group(newName));
 
 //                   DaoManager.getDaoSession().getDatabase().rawQuery("update SCORE set NAME='" + newName + "' where NAME='" + mCurrentGroupName + "'", null);
-                    List<Score> scoreList=DaoManager.getDao(Score.class).queryBuilder().where(ScoreDao.Properties.Name.eq(mCurrentGroupName)).list();
-                    for (int i = 0; i <scoreList.size() ; i++) {
-                        Score score=scoreList.get(i);
+                    List<Score> scoreList = DaoManager.getDao(Score.class).queryBuilder().where(ScoreDao.Properties.Name.eq(mCurrentGroupName)).list();
+                    for (int i = 0; i < scoreList.size(); i++) {
+                        Score score = scoreList.get(i);
                         score.setName(newName);
                         DaoManager.getDao(Score.class).update(score);
                     }
@@ -303,8 +361,8 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
                     mSpinnerAdapter.notifyDataSetChanged();
                     mSpinner.setSelection(mSpinnerList.indexOf(newName));
 
-                        Toast.makeText(getActivity(), "修改分组成功", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                    Toast.makeText(getActivity(), "修改分组成功", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
 
                 }
 
@@ -365,22 +423,22 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
                 .list();
 
         List<Score> NotDNFList = DaoManager.getDao(Score.class).queryBuilder()
-                .where( ScoreDao.Properties.Name.eq(mCurrentGroupName),
+                .where(ScoreDao.Properties.Name.eq(mCurrentGroupName),
                         ScoreDao.Properties.Score.notEq(0))
                 .list();
         int AllCount = ALLlist.size();
         int NotDnfCount = NotDNFList.size();//正常完成的次数
 
-        if (AllCount ==0||NotDnfCount==0) {
-            mBtAvg.setText("本组平均"+NotDnfCount+"/"+AllCount+":  0.000");
+        if (AllCount == 0 || NotDnfCount == 0) {
+            mBtAvg.setText("本组平均" + NotDnfCount + "/" + AllCount + ":  0.000");
             return;
         }
 
-        long sum=0;
-        for (int i = 0; i <NotDNFList.size() ; i++) {
-            sum=sum+NotDNFList.get(i).getScore();
+        long sum = 0;
+        for (int i = 0; i < NotDNFList.size(); i++) {
+            sum = sum + NotDNFList.get(i).getScore();
         }
-        mBtAvg.setText("本组平均"+NotDnfCount+"/"+AllCount+":  "+ DateUtil.formatTime((long) (sum*1.0/NotDnfCount)));
+        mBtAvg.setText("本组平均" + NotDnfCount + "/" + AllCount + ":  " + DateUtil.formatTime((long) (sum * 1.0 / NotDnfCount)));
     }
 
 
