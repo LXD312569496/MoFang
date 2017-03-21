@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#37474f</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="match_item">#6dc4ef</color>
     <color name="color_text">#7e7979</color>
+    <color name="green">#09ec3e</color>
+    <color name="black">#000000</color>
+    <color name="blue">#2196f3</color>
 
+    <color name="toolbar">#263238</color>
 </resources>

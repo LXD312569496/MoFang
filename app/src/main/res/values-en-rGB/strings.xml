@@ -21,7 +21,7 @@
     </string-array>
 
 
-    <string name="main_tv_app_name">Cube Information</string>
+    <string name="main_tv_app_name">Timer</string>
     <string name="main_tab_time">Time</string>
     <string name="main_tab_match">Competition</string>
     <string name="main_tab_rank">Rankings</string>

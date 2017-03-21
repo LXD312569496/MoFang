@@ -1,7 +1,6 @@
 package com.example.administrator.mofang.time;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,14 +27,10 @@ import com.example.administrator.mofang.time.greendao.GroupDao;
 import com.example.administrator.mofang.time.greendao.Score;
 import com.example.administrator.mofang.time.greendao.ScoreDao;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.ChartData;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
@@ -48,7 +43,6 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 
-import static android.R.attr.resource;
 import static com.example.administrator.mofang.time.greendao.DaoManager.getDao;
 
 /**
@@ -78,7 +72,7 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_score, container, false);
         ButterKnife.bind(this, rootView);
-
+        EventBus.getDefault().register(this);
         initView();
 
         return rootView;
@@ -87,7 +81,6 @@ public class ScoreFragment extends Fragment implements AdapterView.OnItemSelecte
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
     }
 
     private void initView() {

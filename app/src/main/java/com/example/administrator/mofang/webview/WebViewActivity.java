@@ -1,15 +1,16 @@
 package com.example.administrator.mofang.webview;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -28,13 +29,12 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2017/2/6.
  */
 
-public class WebViewActivity extends Activity {
+public class WebViewActivity extends AppCompatActivity {
 
     @BindView(R.id.detail_toolbar)
     Toolbar mToolbar;
@@ -68,7 +68,15 @@ public class WebViewActivity extends Activity {
 
     private void init() {
         //设置toolBar
-        mToolbar.inflateMenu(R.menu.webview_menu);
+        mToolbar.setTitle(title);
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(R.drawable.back);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -82,7 +90,6 @@ public class WebViewActivity extends Activity {
                 }else if (itemId==R.id.action_share){
                     share();
                 }
-
                 return true;
             }
         });
@@ -113,6 +120,13 @@ public class WebViewActivity extends Activity {
         //优先使用缓存
         mWebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
+    }
+
+    /** 创建菜单 */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.webview_menu,menu);
+        return true;
     }
 
     private void share() {
@@ -182,10 +196,6 @@ public class WebViewActivity extends Activity {
     }
 
 
-    @OnClick(R.id.detail_bt_back)
-    public void onClick() {
-        finish();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

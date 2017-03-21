@@ -133,3 +133,8 @@
    -keep public class **.R$*{
       public static final int *;
    }
+
+   ##bugly的混淆
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+

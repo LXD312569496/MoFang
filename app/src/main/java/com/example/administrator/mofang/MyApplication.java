@@ -3,7 +3,9 @@ package com.example.administrator.mofang;
 import android.app.Application;
 import android.util.Log;
 
-
+import com.example.administrator.mofang.common.HttpUtil;
+import com.squareup.leakcanary.LeakCanary;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -12,6 +14,8 @@ import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
 import cn.bmob.v3.Bmob;
+
+
 
 
 /**
@@ -29,18 +33,25 @@ public class MyApplication extends Application {
 
         initBmob();
         initUMeng();
-//        initRealm();
 
+        //融云IM初始化
+
+//        RongIM.init(this);
+
+        //腾讯Bugly的初始化
+        CrashReport.initCrashReport(getApplicationContext(), "414170b9dc", false);
+
+        //初始化leakCanary
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
 
     }
 
-//    private void initRealm(){
-//        Realm.init(this);
-//        RealmConfiguration config=new RealmConfiguration.Builder()
-//                .name("score.realm")
-//                .build();
-//        Realm.setDefaultConfiguration(config);
-//    }
+
 
     private void initBmob(){
         Bmob.initialize(this, "bd348eb6d1627be4c6a815d81e92c2e7");

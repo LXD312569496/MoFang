@@ -7,6 +7,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <!--使Application启动的时候透明，看不到白屏页-->
+       <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+
         <item name="android:textColorSecondary">#ffffff</item>
     </style>
 

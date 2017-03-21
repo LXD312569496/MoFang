@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:orderInCategory="98"
         android:id="@+id/action_openByMyWebViewClient"
         android:showAsAction="ifRoom"
         android:title="@string/webview_title_open" />
     <item
+        android:orderInCategory="99"
         android:id="@+id/action_copyURL"
         android:showAsAction="ifRoom"
         android:title="@string/webview_title_copy" />
 
     <item
+        android:orderInCategory="100"
         android:id="@+id/action_share"
-        android:showAsAction="ifRoom"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_share"
         android:title="@string/webview_title_share" />
 
 </menu>

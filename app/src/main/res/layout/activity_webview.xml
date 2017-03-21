@@ -8,14 +8,14 @@
         android:id="@+id/detail_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/blue">
 
-        <Button
-            android:id="@+id/detail_bt_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/back"
-            android:gravity="center_vertical" />
+        <!--<Button-->
+            <!--android:id="@+id/detail_bt_back"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="@drawable/back"-->
+            <!--android:gravity="center_vertical" />-->
 
     </android.support.v7.widget.Toolbar>
 

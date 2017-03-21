@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:orientation="horizontal">
+    android:layout_margin="5dp"
+    android:layout_height="50dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
 
 
-    <TextView
-        android:id="@+id/competitor_tv_name"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"
-        android:gravity="center_vertical"
-        android:text="A Gu De Mu (阿古德木)"
-        android:textColor="@color/match_item" />
+        <TextView
+            android:id="@+id/competitor_tv_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center_vertical"
+            android:text="A Gu De Mu (阿古德木)"
+            android:textColor="@color/match_item" />
 
-    <TextView
-        android:id="@+id/competitor_tv_wcaid"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"
-        android:gravity="center_vertical"
-        android:text="2016BATT02" />
+        <TextView
+            android:id="@+id/competitor_tv_wcaid"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center_vertical"
+            android:text="2016BATT02" />
 
-    <ImageView
-        android:layout_marginRight="5dp"
-        android:id="@+id/competitor_iv_pic"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_gravity="center_vertical" />
+        <ImageView
+            android:id="@+id/competitor_iv_pic"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp" />
 
-    <TextView
-        android:id="@+id/competitor_tv_country"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.8"
-        android:gravity="center_vertical"
-        android:text="中国" />
+        <TextView
+            android:id="@+id/competitor_tv_country"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:gravity="center_vertical"
+            android:text="中国" />
 
 
-</LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

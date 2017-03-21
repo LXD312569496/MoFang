@@ -3,8 +3,6 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'org.greenrobot.greendao'
 
 
-
-
 android {
     signingConfigs {
         config {
@@ -20,11 +18,16 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.administrator.mofang"
-        minSdkVersion 18
+        minSdkVersion 14
         targetSdkVersion 24
         versionCode 11
         versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' , 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     buildTypes {
         release {
@@ -80,7 +83,7 @@ dependencies {
     compile files('libs/umeng_social_shareboard.jar')
     compile files('libs/umeng_shareboard_widget.jar')
     compile project(':PushSDK')
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:design:24.2.1'
     compile files('libs/libammsdk.jar')
     compile files('libs/SocialSDK_WeiXin_Full.jar')
     compile files('libs/BmobStat_v1.1_170114.jar')
@@ -92,4 +95,14 @@ dependencies {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    compile 'com.android.support:cardview-v7:25.2.0'
+    compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    compile 'com.android.support:support-v4:24.2.1'
 }
+

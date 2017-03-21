@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.administrator.mofang">
 
     <application
+        tools:replace="icon,label,theme"
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -10,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -19,12 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".solution.SolutionActivity" />
+        <activity android:name=".query.QueryActivity" />
         <activity
             android:name=".webview.WebViewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".solution.SelectActivity" />
-        <activity android:name=".time.TimeActivity"
-            android:screenOrientation="portrait" android:launchMode="singleInstance"/>
 
         <activity
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
@@ -68,6 +69,21 @@
             <!--android:screenOrientation="portrait"-->
             <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
+        <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
+        <!-- 否则使用拍照功能时，会崩溃 -->
+
+        <!--会话界面-->
+
+
+        <!--<provider-->
+        <!--android:name="android.support.v4.content.FileProvider"-->
+        <!--android:authorities="com.example.administrator.mofang.FileProvider"-->
+        <!--android:grantUriPermissions="true"-->
+        <!--android:exported="false">-->
+        <!--<meta-data-->
+        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+        <!--android:resource="@xml/rc_file_path"/>-->
+        <!--</provider>-->
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -80,6 +96,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
+
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <!--允许一个应用程序来管理文档的访问，通常是一个文档选择器部分-->
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
 

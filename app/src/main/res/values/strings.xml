@@ -22,7 +22,7 @@
 
 
     <!--main模块-->
-    <string name="main_tv_app_name">魔方资讯</string>
+    <string name="main_tv_app_name">计时</string>
     <string name="main_tab_time">计时</string>
     <string name="main_tab_match">赛事</string>
     <string name="main_tab_rank">排名</string>

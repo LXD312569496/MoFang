@@ -1,16 +1,8 @@
 package com.example.administrator.mofang.time;
 
 
-import android.content.ContentResolver;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -25,24 +17,15 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.administrator.mofang.FragmentEvent;
 import com.example.administrator.mofang.R;
 import com.example.administrator.mofang.common.DateUtil;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
-import fr.ganfra.materialspinner.MaterialSpinner;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-
-import static android.app.Activity.RESULT_OK;
+import de.greenrobot.event.Subscribe;
 
 /**
  * Created by Administrator on 2017/2/13.
@@ -63,67 +46,38 @@ public class TimeFragment extends Fragment {
     private int mBackGround;
 
     private int mClickNum = 0;
-
-
-    private Subscription mSubscription = null;
-
-    private int mDelayTime = 1;//间隔时间，单位毫秒,observable发送的速率
-    private long mCurrentTime = 0;//当前时间
+//    private int mClickColor=getResources().getColor(R.color.green);//点击改变颜色
 
     private Scrambler mScrambler = new Scrambler();
     private String mCurrentType = "3x3x3";//当前的魔方类型
     private String mCurrentScramble="";//当前的打乱
 
+    private long mCurrentTime = 0;//当前时间
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_time, container, false);
         ButterKnife.bind(this, rootView);
+        EventBus.getDefault().register(this);
         initView();
 
         return rootView;
     }
 
     private void initView() {
+        mTvTime.setTextColor(getResources().getColor(R.color.black));
         mLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if (motionEvent.getAction() == motionEvent.ACTION_UP) {
-                    Log.d("test", "触摸");
-
-                    if (mClickNum == 0) {
-                        mClickNum++;
-                        mSubscription = Observable.interval(0, mDelayTime, TimeUnit.MILLISECONDS)
-                                .sample(20, TimeUnit.MILLISECONDS)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<Long>() {
-                                    @Override
-                                    public void onCompleted() {
-
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        Log.d("test", e.toString());
-                                    }
-
-                                    @Override
-                                    public void onNext(Long aLong) {
-                                        mCurrentTime = aLong;
-                                        mTvTime.setText(DateUtil.formatTime(mCurrentTime));
-//                                        Log.d("test", "------>along：" + aLong + " time:" + SystemClock.elapsedRealtime());
-
-                                    }
-                                });
-                    } else if (mClickNum == 1) {
-                        mClickNum = 0;
-                        mSubscription.unsubscribe();
-                        showDialog();
-                    }
+                if (motionEvent.getAction()==MotionEvent.ACTION_DOWN||motionEvent.getAction()==MotionEvent.ACTION_MOVE){
+                    mTvTime.setTextColor(getResources().getColor(R.color.green));
                 }
-
+                else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    mTvTime.setTextColor(getResources().getColor(R.color.black));
+                    EventBus.getDefault().post(new FragmentEvent(new TimeScreenFragment()));
+                }
                 return true;
             }
         });
@@ -158,6 +112,12 @@ public class TimeFragment extends Fragment {
         return fragment;
     }
 
+    @Subscribe
+    public void onEventMainThread(GetTimeEvent event){
+        mCurrentTime=event.getTime();
+        mTvTime.setText(DateUtil.formatTime(mCurrentTime));
+        showDialog();
+    }
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -185,9 +145,7 @@ public class TimeFragment extends Fragment {
                 }
             }
         });
-
         builder.create().show();
-
     }
 
 
@@ -195,55 +153,9 @@ public class TimeFragment extends Fragment {
     private void saveScore() {
         Log.d("test", DateUtil.getCurrentTime());
         EventBus.getDefault().post(new SaveTimeEvent(mCurrentTime, DateUtil.getCurrentTime(),mCurrentScramble));
+        getScramble();
     }
 
-
-//    @OnClick(R.id.time_bt_set)
-//    public void onClick() {
-//        Intent intent = new Intent();
-//                /* 开启Pictures画面Type设定为image */
-//        intent.setType("image/*");
-//                /* 使用Intent.ACTION_GET_CONTENT这个Action */
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//                /* 取得相片后返回本画面 */
-//        startActivityForResult(intent, 1);
-//    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            Uri uri = data.getData();
-            Log.e("uri", uri.toString());
-            ContentResolver cr = getActivity().getContentResolver();
-
-
-            try {
-                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
-//                ImageView imageView = (ImageView) findViewById(R.id.iv01);
-//                /* 将Bitmap设定到ImageView */
-//                imageView.setImageBitmap(bitmap);
-                File f = new File(getRealPathFromURI(uri));
-                Drawable d = Drawable.createFromPath(f.getAbsolutePath());
-                mLayout.setBackground(d);
-            } catch (FileNotFoundException e) {
-                Log.e("Exception", e.getMessage(), e);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-
-    private String getRealPathFromURI(Uri contentURI) {
-        Cursor cursor = getActivity().getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) { // Source is Dropbox or other similar local file path
-            return contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            return cursor.getString(idx);
-        }
-    }
 
     @OnClick(R.id.time_tv_scramble)
     public void onClick() {

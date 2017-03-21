@@ -3,12 +3,11 @@ package com.example.administrator.mofang;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.administrator.mofang.common.DateUtil;
-import com.example.administrator.mofang.competitor.Competitor;
-import com.example.administrator.mofang.competitor.SpinnerBean;
-import com.example.administrator.mofang.match.Match;
-import com.example.administrator.mofang.me.Case;
-import com.example.administrator.mofang.rank.Rank;
+import com.example.administrator.mofang.common.HttpUtil;
+import com.example.administrator.mofang.query.competitor.Competitor;
+import com.example.administrator.mofang.query.competitor.SpinnerBean;
+import com.example.administrator.mofang.query.match.Match;
+import com.example.administrator.mofang.query.rank.Rank;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -42,7 +41,7 @@ public class JsoupUtil {
     private static Retrofit retrofit;
     private static MoFangInterface mInterface;
 
-    private  static  String BASE_URL="https://cubingchina.com";
+    private static String BASE_URL = "https://cubingchina.com";
 
     public static void getInstance(Context context) {
         mContext = context;
@@ -66,7 +65,7 @@ public class JsoupUtil {
     }
 
 
-    public static OkHttpClient getOkHttpClient(){
+    public static OkHttpClient getOkHttpClient() {
         return client;
     }
 
@@ -123,15 +122,27 @@ public class JsoupUtil {
             String url = e.select("a").attr("href");
             String date = e.select("td").first().text();
             String name = e.select("a").text();
-            Boolean isOut ;
-//            Log.d("test,",DateUtil.getCurrentDate()+"..."+date+"..."+DateUtil.getCurrentDate().compareTo(date));
-            if (DateUtil.getCurrentDate().compareTo(date)>=0){
-            //说明未过期
-            isOut=true;
-            }else {
-                isOut=false;
+
+            StringBuilder isDanger = new StringBuilder();
+            Boolean isOut;
+
+
+            if (e.attr("class").equals("warning") || e.attr("class").equals("danger") || e.attr("class").equals("info")) {
+                //说明未过期
+                isOut = false;
+                if (e.attr("class").equals("warning") || e.attr("class").equals("danger")) {
+                    Log.d("test",e.toString());
+                    String day = e.select("div.text.days").text();
+                    String hours = e.select("div.text.hours").text();
+                    isDanger.append(day + "天" + hours + "小时");
+
+                }
+                Log.d("test", isDanger.toString());
+
+            } else {
+                isOut = true;
             }
-            list.add(new Match(url, date, name, isOut));
+            list.add(new Match(url, date, name, isOut, isDanger.toString()));
         }
         //抓取今天正在进行的比赛
 //        Elements links1 = document.select("tr.success");
@@ -145,15 +156,15 @@ public class JsoupUtil {
 //        }
 
         //抓取过期的比赛
-        Elements links2 = document.select("tr.active");
-        for (Element e : links2) {
-//            Log.d("test", e.toString());
-            String url = e.select("a").attr("href");
-            String date = e.select("td").first().text();
-            String name = e.select("a").text();
-            Boolean isOut = true;
-            list.add(new Match(url, date, name, isOut));
-        }
+//        Elements links2 = document.select("tr.active");
+//        for (Element e : links2) {
+////            Log.d("test", e.toString());
+//            String url = e.select("a").attr("href");
+//            String date = e.select("td").first().text();
+//            String name = e.select("a").text();
+//            Boolean isOut = true;
+//            list.add(new Match(url, date, name, isOut));
+//        }
 
         return list;
     }
@@ -252,38 +263,6 @@ public class JsoupUtil {
 //
 //        return list;
 //    }
-
-
-    /**
-     * 抓取具体的公式
-     */
-    public static List<Case> getCase(String str) {
-        List<Case> list = new ArrayList<>();
-        List<String> imgList=new ArrayList<>();
-        List<String> solutionList=new ArrayList<>();
-
-        Document document = Jsoup.parse(str);
-        Elements elements=document.select("tr");
-        for (int i = 0; i < elements.size(); i++) {
-            if (i%2==0){
-                Elements elems=elements.get(i).select("td");
-                for (int j = 0; j <elems.size() ; j++) {
-                    imgList.add(elems.get(j).select("img").attr("src"));
-                }
-            }else if (i%2==1){
-                Elements elems=elements.get(i).select("td");
-                for (int j = 0; j < elems.size(); j++) {
-                    solutionList.add(elems.get(j).text());
-                }
-            }
-        }
-//            list.add(new Case(url, name, bitmap, result));
-        for (int i = 0; i <imgList.size() ; i++) {
-            list.add(new Case("","ZBF2L-"+i,imgList.get(i),solutionList.get(i)));
-        }
-
-        return list;
-    }
 
 
 }
