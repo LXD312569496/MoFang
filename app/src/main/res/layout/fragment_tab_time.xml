@@ -13,6 +13,7 @@
         android:background="@color/blue" />
 
     <com.flyco.tablayout.CommonTabLayout
+        app:tl_indicator_color="@color/blue"
         android:background="@color/toolbar"
         android:id="@+id/tab_time_tab_layout"
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.example.administrator.mofang.common.HttpUtil;
+import com.example.administrator.mofang.retrofit.JsoupUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
@@ -48,6 +49,9 @@ public class MyApplication extends Application {
             return;
         }
         LeakCanary.install(this);
+
+        //初始化有米广告
+//        AdManager.getInstance(this).init("0724a1f54af9761c","532208c4e26a1a70",true,true);
 
     }
 

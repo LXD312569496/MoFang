@@ -37,7 +37,7 @@ public class SolutionActivity extends AppCompatActivity {
     @BindView(R.id.solution_tool_bar)
     Toolbar mToolBar;
 
-    private String name="";
+    private String name = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class SolutionActivity extends AppCompatActivity {
 
 
     private void initView() {
-         name = getIntent().getStringExtra("name");
+        name = getIntent().getStringExtra("name");
         //设置toolbar
 
         mToolBar.setTitle(name);
@@ -73,7 +73,7 @@ public class SolutionActivity extends AppCompatActivity {
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.action_refresh:
                         getData();
                         break;
@@ -83,12 +83,16 @@ public class SolutionActivity extends AppCompatActivity {
         });
 
         getData();
+
     }
 
-    /** 创建菜单 */
+
+    /**
+     * 创建菜单
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.solution_menu,menu);
+        getMenuInflater().inflate(R.menu.solution_menu, menu);
         return true;
     }
 

@@ -138,3 +138,7 @@
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 
+    #有米的混淆
+-keep public class android.support.**{
+    *;
+}

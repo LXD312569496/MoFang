@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.example.administrator.mofang.JsoupUtil;
+import com.example.administrator.mofang.retrofit.JsoupUtil;
 import com.example.administrator.mofang.MainActivity;
 import com.example.administrator.mofang.R;
 import com.example.administrator.mofang.query.competitor.SpinnerAdapter;

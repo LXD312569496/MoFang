@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.administrator.mofang.JsoupUtil;
+import com.example.administrator.mofang.retrofit.JsoupUtil;
 import com.example.administrator.mofang.MainActivity;
 import com.example.administrator.mofang.R;
 import com.umeng.analytics.MobclickAgent;
